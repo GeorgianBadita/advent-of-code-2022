@@ -8,7 +8,7 @@
 [Z] [G] [V] [V] [Q] [M] [L] [N] [R]
  1   2   3   4   5   6   7   8   9 
 
-move 1 from 3 to 5
+move 1 from 3 to 51
 move 2 from 2 to 8
 move 4 from 1 to 3
 move 2 from 1 to 4
