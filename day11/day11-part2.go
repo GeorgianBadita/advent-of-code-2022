@@ -10,32 +10,32 @@ import (
 
 type Monkey struct {
 	Id         int
-	Items      []int
-	Multiplier int
-	Adder      int
+	Items      []uint64
+	Multiplier uint64
+	Adder      uint64
 	Div        int
 	OnTrue     int
 	OnFalse    int
 	IsSquare   bool
 }
 
-func (m Monkey) EvalTest(worry int) bool {
+func (m Monkey) EvalTest(worry uint64) bool {
 	return worry%m.Div == 0
 }
 
-func (m Monkey) ThrowTo(worry int) int {
+func (m Monkey) ThrowTo(worry uint64) uint64 {
 	if m.EvalTest(worry) {
 		return m.OnTrue
 	}
 	return m.OnFalse
 }
 
-func (m Monkey) FinalWorry(worry int) int {
+func (m Monkey) FinalWorry(worry uint64) int {
 	mult := m.Multiplier
 	if m.IsSquare {
 		mult = worry
 	}
-	return (worry*mult + m.Adder) / 3
+	return (worry*mult + m.Adder)
 }
 
 func ReadFromFile(filePath string) ([]Monkey, error) {
