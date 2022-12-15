@@ -23,19 +23,12 @@ func (m Monkey) EvalTest(worry int) bool {
 	return worry%m.Div == 0
 }
 
-func (m Monkey) ThrowTo(worry int) int {
-	if m.EvalTest(worry) {
-		return m.OnTrue
-	}
-	return m.OnFalse
-}
-
 func (m Monkey) FinalWorry(worry int) int {
 	mult := m.Multiplier
 	if m.IsSquare {
 		mult = worry
 	}
-	return (worry*mult + m.Adder) / 3
+	return (worry*mult + m.Adder)
 }
 
 func ReadFromFile(filePath string) ([]Monkey, error) {
@@ -148,6 +141,7 @@ func Solve(monkeys []Monkey) int {
 		}
 	}
 
+	fmt.Printf("Arr: %v\n", inspected)
 	return max1 * max2
 }
 
