@@ -10,27 +10,20 @@ import (
 
 type Monkey struct {
 	Id         int
-	Items      []uint64
-	Multiplier uint64
-	Adder      uint64
+	Items      []int
+	Multiplier int
+	Adder      int
 	Div        int
 	OnTrue     int
 	OnFalse    int
 	IsSquare   bool
 }
 
-func (m Monkey) EvalTest(worry uint64) bool {
+func (m Monkey) EvalTest(worry int) bool {
 	return worry%m.Div == 0
 }
 
-func (m Monkey) ThrowTo(worry uint64) uint64 {
-	if m.EvalTest(worry) {
-		return m.OnTrue
-	}
-	return m.OnFalse
-}
-
-func (m Monkey) FinalWorry(worry uint64) int {
+func (m Monkey) FinalWorry(worry int) int {
 	mult := m.Multiplier
 	if m.IsSquare {
 		mult = worry
@@ -112,14 +105,18 @@ func ReadFromFile(filePath string) ([]Monkey, error) {
 
 func Solve(monkeys []Monkey) int {
 	inspected := []int{}
-	for range monkeys {
+	prod := 1
+	for _, monkey := range monkeys {
 		inspected = append(inspected, 0)
+		prod *= monkey.Div
 	}
 
-	for idx := 0; idx < 20; idx++ {
+	fmt.Printf("%v\n", prod)
+
+	for idx := 0; idx < 10000; idx++ {
 		for jdx := 0; jdx < len(monkeys); jdx++ {
 			for _, worry := range monkeys[jdx].Items {
-				newWorry := monkeys[jdx].FinalWorry(worry)
+				newWorry := monkeys[jdx].FinalWorry(worry) % prod
 				inspected[jdx]++
 				if monkeys[jdx].EvalTest(newWorry) {
 					monkeys[monkeys[jdx].OnTrue].Items = append(monkeys[monkeys[jdx].OnTrue].Items, newWorry)
@@ -148,6 +145,7 @@ func Solve(monkeys []Monkey) int {
 		}
 	}
 
+	fmt.Printf("Arr: %v\n", inspected)
 	return max1 * max2
 }
 
