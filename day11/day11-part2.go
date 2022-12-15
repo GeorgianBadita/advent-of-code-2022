@@ -105,14 +105,18 @@ func ReadFromFile(filePath string) ([]Monkey, error) {
 
 func Solve(monkeys []Monkey) int {
 	inspected := []int{}
-	for range monkeys {
+	prod := 1
+	for _, monkey := range monkeys {
 		inspected = append(inspected, 0)
+		prod *= monkey.Div
 	}
 
-	for idx := 0; idx < 20; idx++ {
+	fmt.Printf("%v\n", prod)
+
+	for idx := 0; idx < 10000; idx++ {
 		for jdx := 0; jdx < len(monkeys); jdx++ {
 			for _, worry := range monkeys[jdx].Items {
-				newWorry := monkeys[jdx].FinalWorry(worry)
+				newWorry := monkeys[jdx].FinalWorry(worry) % prod
 				inspected[jdx]++
 				if monkeys[jdx].EvalTest(newWorry) {
 					monkeys[monkeys[jdx].OnTrue].Items = append(monkeys[monkeys[jdx].OnTrue].Items, newWorry)
